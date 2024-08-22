@@ -27,7 +27,7 @@ def get_course_by_id(request):
         return Response({"error": "Course ID is required."}, status=status.HTTP_400_BAD_REQUEST)
 
     try:
-        course = Course.objects.get(id=course_id)
+        course = Course.objects.get(id=course_id,is_active=True, is_deleted=False)
     except Course.DoesNotExist:
         return Response({"error": "Course not found."}, status=status.HTTP_404_NOT_FOUND)
 
@@ -53,7 +53,7 @@ def update_course(request):
         return Response({"error": "Course ID is required."}, status=status.HTTP_400_BAD_REQUEST)
 
     try:
-        course = Course.objects.get(id=course_id)
+        course = Course.objects.get(id=course_id,is_active=True, is_deleted=False)
     except Course.DoesNotExist:
         return Response({"error": "Course not found."}, status=status.HTTP_404_NOT_FOUND)
 

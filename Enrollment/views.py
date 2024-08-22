@@ -28,7 +28,7 @@ def get_enrollment_by_id(request):
         return Response({"error": "ID parameter is required."}, status=status.HTTP_400_BAD_REQUEST)
     
     try:
-        enrollment = Enrollment.objects.get(id=enrollment_id)
+        enrollment = Enrollment.objects.get(id=enrollment_id,is_active=True, is_deleted=False)
     except Enrollment.DoesNotExist:
         return Response({"error": "Enrollment not found."}, status=status.HTTP_404_NOT_FOUND)
     
@@ -55,7 +55,7 @@ def update_enrollment_by_id(request):
         return Response({"error": "ID parameter is required."}, status=status.HTTP_400_BAD_REQUEST)
     
     try:
-        enrollment = Enrollment.objects.get(id=enrollment_id)
+        enrollment = Enrollment.objects.get(id=enrollment_id,is_active=True, is_deleted=False)
     except Enrollment.DoesNotExist:
         return Response({"error": "Enrollment not found."}, status=status.HTTP_404_NOT_FOUND)
 
@@ -94,7 +94,7 @@ def get_enrollments_by_student(request):
         return Response({"error": "Student ID parameter is required."}, status=status.HTTP_400_BAD_REQUEST)
     
     try:
-        enrollments = Enrollment.objects.filter(student_id=student_id)
+        enrollments = Enrollment.objects.filter(student_id=student_id,is_active=True, is_deleted=False)
         if not enrollments.exists():
             return Response({"error": "No enrollments found for this student."}, status=status.HTTP_404_NOT_FOUND)
         
@@ -115,7 +115,7 @@ def get_enrollments_by_course(request):
         return Response({"error": "Course ID parameter is required."}, status=status.HTTP_400_BAD_REQUEST)
     
     try:
-        enrollments = Enrollment.objects.filter(course_id=course_id)
+        enrollments = Enrollment.objects.filter(course_id=course_id,is_active=True, is_deleted=False)
         if not enrollments.exists():
             return Response({"error": "No enrollments found for this course."}, status=status.HTTP_404_NOT_FOUND)
         
@@ -135,7 +135,7 @@ def get_enrollments_by_status(request):
         return Response({"error": "Status parameter is required."}, status=status.HTTP_400_BAD_REQUEST)
     
     try:
-        enrollments = Enrollment.objects.filter(status=status_param)
+        enrollments = Enrollment.objects.filter(status=status_param,is_active=True, is_deleted=False)
         if not enrollments.exists():
             return Response({"error": "No enrollments found with the specified status."}, status=status.HTTP_404_NOT_FOUND)
         
