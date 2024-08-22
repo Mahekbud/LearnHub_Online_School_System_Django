@@ -15,11 +15,9 @@ def create_classroom(request):
     if serializer.is_valid():
         classroom = serializer.save()
         classroom_education = classroom.education
-        
-        # Retrieve students with the same education level
+       
         students = Student.objects.filter(education=classroom_education)
-        
-        # Assign these students to the classroom
+      
         if students.exists():
             classroom.students.set(students)
             classroom.save()
