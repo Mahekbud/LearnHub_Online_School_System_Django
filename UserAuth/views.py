@@ -282,11 +282,9 @@ def reset_password_by_token(request):
     except User.DoesNotExist:
         return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
-    # Check if the old password matches
     if not bcrypt.checkpw(old_password.encode('utf-8'), db_user.password.encode('utf-8')):
         return Response({'error': 'Old password does not match'}, status=status.HTTP_400_BAD_REQUEST)
 
-    # Set new password
     db_user.password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
     db_user.save()
 
